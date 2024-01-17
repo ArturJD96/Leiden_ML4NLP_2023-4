@@ -1,7 +1,14 @@
-import music21
+from music21 import *
 
-palestrina_corpus = music21.corpus.getComposer('Palestrina')
+palestrina_score_paths = corpus.getComposer('palestrina')
 
-score = music21.corpus.parse(palestrina_corpus[0])
+for score_path in palestrina_score_paths:
 
-print(score)
+    score = corpus.parse(score_path)
+
+    print(score_path)
+
+    fe = features.jSymbolic.DirectionOfMotionFeature(score)
+    feature = fe.extract()
+
+    print(feature.vector)
