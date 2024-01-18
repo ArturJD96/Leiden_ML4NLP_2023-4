@@ -94,7 +94,9 @@ Data (concept datasets):
 * 25s each
 * data not used in the training set.
 
-**CAV: Concept Activation Vector v^k_l**
+
+## CAV: Concept Activation Vector v^k_l
+
 * _k_ - concept
 * _l_ - neural network layer
 * _x_ - piano roll
@@ -133,7 +135,9 @@ $S_(k,o,l) = \nabla g_(l,o)(f_l(x))\dot v^k_l$
 	- multiple pieces belonging to one class
 	- ratio of pieces for which S is positive \[12\]
 
-TCAV – Experiment
+
+## Experiment
+
 1. compute CAV for every concept
 	* https://captum.ai/api/concept.html
 	* separating activations of _concept_ and _random_ with SVM
@@ -144,8 +148,166 @@ TCAV – Experiment
 3. compute TCAV for all pieces by the same composer
 	* relative amount of positive conceptual sensitivities over the pieces
 	* splitting pieces into non-overlapping 20s segments
+	* 10 runs with 10 random dataset
+4. validation
+	* two-sided t-test
+	* Bonferroni correction
+	* significance threshold $\alpha = 0.05/n$
+		- _n_ - hypothesis tests (3 + 10)
 
 
+## Results
+
+* both intuitive and counter-intuitive classifications (table p. 879)
+* negative activation should be treated with care.
+
+
+# Unsupervised concept-based explanations
+
+NN must be:
+* convolutional
+* use non-negative activation function (e.g. ReLU)
+
+Defining a _concept_:
+* layer activations: ${\mathcal{X} = f_l(x_1),...,f_l(x_N)}$
+* pieces: $x_l...,x_N$
+* _Concept_ defined from clustering layer activations of a (short Euclidean distance).
+
+Disentangling concepts:
+* the approach above works best with only _one_ defined concept
+* ...however we expect the whole number of concepts!
+* concepts can overlap
+* use Non-negative Tucker Decomposition (NTD)
+
+## CAV -> Channel-CAV
+
+_Explanation_
+* ...given layer actications $f_l(x)$...
+* vectors obtained by fixing an index for _W_ and _H_ dimenions (_h_, _w_) \[33\]
+* _Channel-mode tubes:_
+	- different representation of the same piece with a different _receptive field_ \[34\].
+	- represents a piece
+* advantages:
+	- _dimensionality reduction:_ analyzing channel-mode tubes $\in \mathbb{R}$ **instead** of full layer activations $\in \mathbb{R}^(H\times W\times C)$. \[14\]
+	- increasing amount of data
+	- highlighting in which part of a piece a certain concept is present
+
+_Computing:_
+* dataset: _N_ segments of pieces (20s each)
+1. Input each excerpt to the trained system
+2. Produce activations for _l_
+	* all activations: _tensor_ $\mathcal{X} \in \mathbb{R}^(N\times H\times W\times C$ where:
+		- $H$ - frequency
+		- $W$ - time
+		- $C$ - channel size
+3. Applying NTD to $\mathcal{X}$ -> set of C-CAVs.
+
+_Visualisation_ (**piano roll!**)
+* "layer activations have a spatial correlation with input data" (p.880) \[35\]
+* projecting $h$ and $w$ of each C-CAV to *piano roll*.
+
+
+## Non-negative Tucker Decomposition
+
+* details: \[33\]
+* implementation: \[36\]
+	- updating factor matrices: Hierarchical non-negative Alternating Least Squares algorithm
+	- updating the core: Fast Iterative Shrinkage-Thresholding Algorithm
+
+Decomposing tensor to:
+* non-negative _core_ tensor:
+	- $\mathcal{T}\in \mathbb{R}^{N'\times H'\times W'\times C'}$
+* multiple _factor_ matrices (one for every dimension \[33\])
+	- $\mathcbf{A}\in \mathbb{R}^{N\times N'}$
+	- $\mathcbf{B}\in \mathbb{R}^{H\times H'}$
+	- $\mathcbf{D}\in \mathbb{R}^{W\times W'}$
+	- $\mathcbf{E}\in \mathbb{R}^{C\times C'}$
+* $\mathcal{X} \approx \displaystyle\sum_{n=1}^{N'} \displaystyle\sum_{h=1}^{H'} \displaystyle\sum_{w=1}^{W'} \displaystyle\sum_{c=1}^{C'} t_{nhwc}a_n\circ b_h\circ d_w\circ e_c$
+	- $t_{nhwc}$ - scalar element
+	- $a_n$, $b_h$, $d_w$, $e_c$ - matrices
+	- $\circ$ - vector outer product of the column vectors of 4 matrices
+
+Hyperparameters
+* $N'$, $H'$, $W'$, $C'$
+* numbers of columns of the factor matrices (NTD ranks)
+* set as low as possible (decreasing the size of the matrices)
+
+Obtaining C-CAVs:
+* "every channel-mode tube in $\mathcal{X}$ can be reconstructed as a weighted sum of the columns of matrix $\mathcbf{E}$ (p.880)
+* columns of $\mathbb{E}$ - disentangled C-CAVs.
+* ranks $C'$ - number of columns
+
+**Fidelity**: ratio of the predictions remaining unchaged after performing NTD.
+* reconstructing original tensor (layer activations)
+* "computing output of the composer classifier by feeding it back into the network" (p. 880)
+
+
+# Experiments
+
+1. Computing unsupervised explanations (for penultimate layer)
+2. Testing multiple NTD ranks]
+
+## User concept presentation
+
+"The presentation of piece excerpts is more challenging for musical data than for im- ages" (p.880)
+
+* concept examples
+	- positive: 5 piece excerpts (highest average concept presence)
+	- negative: 5 piece excerpts (lowest average concept presence)
+* Plotly - visual piano roll
+* concept presence heatmap (mask over piano roll)
+	- slider for heatmap threshold
+* simplifying choice to two "contrasting" composers (why one was chosen and not the other?) for psychological reasons (easier to understand for a human why one was chosen but not the other; this gets confusing whith higher number of composers)
+
+Tested factorization approaches:
+1. NTD on 4-D matrix
+2. NTD on 3-D matrix
+	- horizontal \& vertical concatenated
+3. NMF on 2-D matrix (as in \[14\])
+
+## Results
+
+1. With 2 composers considered, maximum _fidelity_ is approximated by only 3-5 C-CAVs.
+2. No advantage for any factorization techniques when number of C-CAVs is fixed
+3. NTD allows for up to 15 times higher compression (of $\mathcal{X}$ with the same fidelity)
+4. NTD is much slower to compute
+5. Unsupervised explainer gives useful examples for opposing concepts
+
+Issues with non-negative factorisation techniques:
+- giving one C-CAV comprising two different concepts
+- producing two C-CAV referring to the same concept
+- hard to name some C-CAVs
+
+
+# Conclusions \& Future Work
+
+Supervised explainer:
+- useful for testing concept but...
+- creating concept dataset is time-consuming,
+- requires music expertise,
+- trying different concepts to find relevant one,
+- ...solved by unsupervised learning
+
+Unsupervised explainer:
+- concepts presented with examples
+
+## Future work
+
+Supervise explainer:
+- integrating recent promising results
+- stricter hypothesis testing
+
+Unsupervised explainer:
+- formal user-based evaluation by musicologists
+- which number of C-CAVs gives most interpretable musical concepts
+- is agreement on naming possible
+- attenuating non-negative factorisation problems with sparsity constraints applied to the core tensor and matrices in the NTD
+
+General:
+- make excerpt length variable
+- longer excerpts can lead to the analysis of the whole structure
+- possibility to apply both approaches to audio classifiers
+- dedicated user interfaces.
 
 
 
