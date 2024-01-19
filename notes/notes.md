@@ -1,9 +1,7 @@
 1. McKay, Toward a Theory of Formal Function for Renaissance Music
 
 
-music21 -> vector representation -> 1/4 data assigned to clausulae by hand (test data), 3/4 data set as training data -> resulting in classification of clausulae based on a given fragment. E.g., "this is an x based on y."
-
-Perhaps a multi-class classification problem in machine learning? Use Keras?
+music21 -> chord.Chord (chordify) -> vector/factor to intervals of pitches -> (Machine Learning) deterime the "Falls into Presentation Types in Two, Three and Four Voices (MacKay)" -> Likely possible presentation type of given score -> (NLP) generate response. 
 
 
 ### Old notes
