@@ -1,4 +1,4 @@
-1. McKay, Toward a Theory of Formal Function for Renaissance Music
+1. MacKay, Toward a Theory of Formal Function for Renaissance Music
 
 
 music21 -> chord.Chord (chordify) -> vector/factor to intervals of pitches -> (Machine Learning) deterime the "Falls into Presentation Types in Two, Three and Four Voices (MacKay)" -> Likely possible presentation type of given score -> (NLP) generate response. 
