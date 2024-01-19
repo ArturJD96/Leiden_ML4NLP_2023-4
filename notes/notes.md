@@ -10,8 +10,8 @@ Perhaps a multi-class classification problem in machine learning? Use Keras?
 
 Applying NLP into the area of counterpoint expert system explainability
 
-1. Recognize the cadence
-2. LM: why is it a cadence?
+1. Recognize the clausulae
+2. LM: why is it a clausulae?
 
 NLP: summarization
 
