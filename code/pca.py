@@ -2,14 +2,16 @@ import numpy
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 
-scores = numpy.load('data/score_vectors.npy')
+DIRECTORY = '4_parts'
 
-pca = PCA(n_components=2)
+scores = numpy.load(f'data/{DIRECTORY}/score_vectors.npy')
+
+pca = PCA(n_components=3)
 pca.fit_transform(scores)
 
-print(pca.components_)
-
-plt.scatter(pca.components_[0], pca.components_[1])
+fig = plt.figure()
+ax = plt.axes(projection='3d')
+scatter = ax.scatter3D(pca.components_[0], pca.components_[1], pca.components_[2])
 plt.show()
 
 
