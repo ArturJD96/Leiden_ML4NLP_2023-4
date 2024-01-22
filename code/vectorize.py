@@ -5,16 +5,13 @@ import numpy
 
 SCORES = 10 # when 0, take all
 # PARTS = 4 # how many 'parts' ('voices' or **kern spines) in a score do we look for.
-PART_MAX = 8
+PART_MAX = 8 # highest number of parts ('voices') in the database
 OFFSET_MAX = (16 * 8) # first 16 bars, 4 half-notes each [in quarter notes length]
-
 
 '''
     Get paths to Palestrina files (in 'kern/humdrum' .krn format)
 '''
 palestrina_score_paths:list[pathlib.PosixPath] = music21.corpus.getComposer('palestrina') # FIRST 10 !!!
-# print(f'All Palestrina file scores: {len(palestrina_score_paths)}')
-
 palestrina_score_paths = palestrina_score_paths[:(SCORES if SCORES else len(palestrina_score_paths))]
 
 '''
@@ -41,16 +38,29 @@ for path in palestrina_score_paths:
     'x' is score id
     'y' is the current offset
     'z' are the (vertical) pitches in this offset (by part id.)
+
+    Initialize the array with the following dimensions:
+    * SCORES – how many scores from the database are used.
+    * OFFSET_MAX – what is the size of window (a grid of quarter notes).
+    * PART_MAX - what is the highest number of parts (voices) in a score.
 '''
-vectors = numpy.zeros((SCORES, OFFSET_MAX, PART_MAX))
+vectors = numpy.zeros((SCORES, OFFSET_MAX * PART_MAX))
 for score_id, score in enumerate(palestrina_scores):
     for part_id, part in enumerate(score.parts):
-        part_flat = part.flatten()
-        midi = 0
-        for offset in range(OFFSET_MAX):
-            noteOrRest = part_flat.getElementsByOffset(offset).notesAndRests
-            for n in noteOrRest:
-                midi = 0 if n.isRest else (n.pitch.midi / 127)
-            vectors[score_id, offset, part_id] = midi
-    
-print(vectors)
+        if part_id < PART_MAX:
+            part_flat = part.flatten()
+            midi = 0 # number from 0 to 127
+            for offset in range(OFFSET_MAX):
+                noteOrRest = part_flat.getElementsByOffset(offset).notesAndRests
+                for n in noteOrRest:
+                    midi = 0 if n.isRest else (n.pitch.midi / 127)
+                # vectors[score_id, offset, part_id] = midi
+                dim = part_id + (offset * PART_MAX)
+                vectors[score_id, dim] = midi
+
+numpy.save('data/score_vectors', vectors)
+
+score_labels = [f'{score.metadata.parentTitle} - {path.stem}' for score, path in zip(palestrina_scores, palestrina_score_paths)]
+
+with open('data/labels.txt', 'w') as file:
+    file.write('\n'.join(score_labels))
