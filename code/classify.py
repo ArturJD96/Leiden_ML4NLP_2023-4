@@ -13,8 +13,9 @@ from sklearn.preprocessing import StandardScaler
 # import matplotlib.pyplot as plt
 # from sklearn.decomposition import PCA
 
-scores = np.load('data/score_vectors.npy')
-labels = pathlib.Path('data/labels.txt').read_text().split('\n')
+scores = np.load('data/all_parts/score_vectors.npy')
+
+labels = pathlib.Path('data/all_parts/labels_temp.txt').read_text().split('\n')
 
 # pca = PCA(n_components=2)
 # pca.fit_transform(scores)
@@ -24,13 +25,17 @@ scores_standardized = scaler.fit_transform(scores)
 
 X_train, X_test, y_train, y_test = train_test_split(scores_standardized, labels, test_size=0.2, random_state=42)
 
-knn_classifier = KNeighborsClassifier(n_neighbors=5, metric='euclidean') # arbitrary number
+knn_classifier = KNeighborsClassifier(n_neighbors=5) # arbitrary number
 knn_classifier.fit(X_train, y_train)
 predictions = knn_classifier.predict(X_test)
 accuracy = accuracy_score(y_test, predictions)
 print(f'Accuracy: {accuracy:.2f}')
 
-print(predictions)
+# print("True Label\tPredicted Label")
+# for true_label, predicted_label in zip(y_test, predictions):
+#     print(f'{true_label}\t\t{predicted_label}')
+
+
 
 # disp = DecisionBoundaryDisplay.from_estimator(knn_classifier, X_test)
 # plt.scatter(disp)
