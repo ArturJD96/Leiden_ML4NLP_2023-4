@@ -4,9 +4,9 @@ import re
 import numpy
 
 SCORES = 0 # when 0, take all
-PARTS = 4 # how many 'parts' ('voices' or **kern spines) in a score do we look for (if 0, disregard this condition).
+PARTS = 3 # how many 'parts' ('voices' or **kern spines) in a score do we look for (if 0, disregard this condition).
 PART_MAX = 8 # highest number of parts ('voices') in the database
-OFFSET_MAX = (16 * 8) # first 16 bars, 4 half-notes each [in quarter notes length]
+OFFSET_MAX = (8 * 8) # first 8 bars, 4 half-notes each [in quarter notes length]
 
 '''
     Get paths to Palestrina files (in 'kern/humdrum' .krn format)
@@ -19,16 +19,23 @@ palestrina_score_paths = palestrina_score_paths[:(SCORES if SCORES else len(pale
     Get all the scores.
 '''
 palestrina_scores = []
-for path in palestrina_score_paths:
+labels = []
+for i, path in enumerate(palestrina_score_paths):
     try:
         text = path.read_text()
         parts = text.count('**kern')
     except UnicodeDecodeError:
-        ...
+        palestrina_score_paths = palestrina_score_paths[:i] + palestrina_score_paths[i+1:]
     else:
         if not PARTS or parts == PARTS:
+            # add score
             score = music21.corpus.parse(path)
             palestrina_scores.append(score)
+            # add score label
+            mass_name = score.metadata.parentTitle
+            part_name = path.stem
+            label = f'{mass_name}: {part_name}'
+            labels.append(label)
 
 # print(f'All Palestrina {PARTS}-part scores: {len(palestrina_scores)}')
 
@@ -43,7 +50,7 @@ for path in palestrina_score_paths:
     * OFFSET_MAX – what is the size of window (a grid of quarter notes).
     * PART_MAX - what is the highest number of parts (voices) in a score.
 '''
-vectors = numpy.zeros((OFFSET_MAX * PART_MAX, len(palestrina_scores)))
+vectors = numpy.zeros((len(palestrina_scores), (OFFSET_MAX * PART_MAX)))
 for score_id, score in enumerate(palestrina_scores):
     print(f'Processing score {score_id+1} out of {len(palestrina_scores)}')
     for offset in range(OFFSET_MAX):
@@ -56,11 +63,22 @@ for score_id, score in enumerate(palestrina_scores):
                     midi = 0 if n.isRest else (n.pitch.midi / 127)
                 # vectors[score_id, offset, part_id] = midi
                 dim = part_id + (offset * PART_MAX)
-                vectors[dim, score_id] = midi
+                vectors[score_id, dim] = midi
 
-numpy.save('data/score_vectors', vectors)
+data_path = pathlib.Path(f'data/{'all' if not PARTS else PARTS}_parts/')
+data_path.mkdir(parents=True, exist_ok=True)
+numpy.save(data_path / 'score_vectors', vectors)
 
-score_labels = [f'{score.metadata.parentTitle} - {path.stem}' for score, path in zip(palestrina_scores, palestrina_score_paths)]
+# score_labels = [f'{score.metadata.parentTitle} - {path.stem}' for score, path in zip(palestrina_scores, palestrina_score_paths)]
+(data_path / 'labels.txt').write_text('\n'.join(labels))
 
-with open('data/labels.txt', 'w') as file:
-    file.write('\n'.join(score_labels))
+metadata = f'''
+This file was extracted
+using vectorize.py
+following settings:
+
+SCORES: {'all' if not SCORES else SCORES}
+PARTS: {'all' if not PARTS else PARTS}
+OFFSET_MAX: {OFFSET_MAX}
+'''
+(data_path / 'metadata.txt').write_text(metadata)

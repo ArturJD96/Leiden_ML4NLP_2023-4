@@ -1,0 +1,72 @@
+Missa Ad fugam: Benedictus_00
+Missa Aeterna Christi munera: Benedictus_01_a
+Missa Ave regina coelorum: Benedictus_08_a
+Missa Brevis: Benedictus_11_a
+Missa De feria: Benedictus_18_a
+Missa Descendit angelus Domini: Benedictus_19_a
+Missa Gabriel Archangelus: Benedictus_24_a
+Missa Ecce sacerdos magnus: Benedictus_25_a
+Missa Emendemus in melius: Benedictus_26_a
+Missa Gia fu chi m'ebbe cara: Benedictus_28_a
+Missa Primi toni: Benedictus_36_a
+Missa Repleatur os meum laude: Benedictus_45
+Missa Sine nomine (Mantuan): Benedictus_54_a
+Missa Spem In Alium: Benedictus_55
+Missa Virtute magna: Benedictus_66_a
+Missa In illo tempore: Benedictus_68_a
+Missa In minoribus duplicibus: Benedictus_70_a
+Missa Io mi son giovinetta (1570): Benedictus_76
+Missa Iste confessor: Benedictus_77_a
+Missa Jesu Nostra Redemptio: Benedictus_79_a
+Missa Lauda Sion: Benedictus_80_a
+Missa L'homme arme (1582): Benedictus_83_a
+Missa O magnum mysterium: Benedictus_88_a
+Missa O Regem coeli: Benedictus_89_a
+Missa O Rex gloriae: Benedictus_90_a
+Missa Panis quem ego dabo: Benedictus_95
+Missa Pater noster: Benedictus_97
+Missa Ave Maria (1594): Credo_08_b
+Missa Ave regina coelorum: Credo_11_b
+Missa Ave regina coelorum: Credo_11_c
+Missa Ave regina coelorum: Credo_11_d
+Missa De beata virgine (1567): Credo_13_b
+Missa Ecce sacerdos magnus: Credo_23_b
+Missa Illumina oculos meos: Credo_30_e
+Missa Quam pulchra es: Credo_38_b
+Missa Quem dicunt homines: Credo_40_b
+Missa Regina coeli (1601): Credo_43_b
+Missa Repleatur os meum laude: Credo_44_b
+Missa Sanctorum meritis: Credo_49_b
+Missa Sine nomine (Mantuan): Credo_53_b
+Missa Spem In Alium: Credo_54_b
+Missa Spem In Alium: Credo_54_c
+Missa Virtute magna: Credo_64_b
+Missa In majoribus duplicibus: Credo_68_b
+Missa In minoribus duplicibus: Credo_69_b
+Missa Inviolata: Credo_74_b
+Missa Io mi son giovinetta (1570): Credo_75_b
+Missa Jam Christus astra ascenderat: Credo_77_b
+Missa O Regem coeli: Credo_88_b
+Missa O Rex gloriae: Credo_89_b
+Missa Pater noster: Credo_96_b
+Missa Io mi son giovinetta (1570): Gloria_78_b
+Missa Ad fugam: Sanctus_00_b
+Missa Aspice Domine: Sanctus_03_b
+Missa Ave Maria (1594): Sanctus_05_b
+Missa Benedicta es: Sanctus_09_b
+Missa De beata virgine (1567): Sanctus_15_b
+Missa Ecce sacerdos magnus: Sanctus_24_b
+Missa Gabriel Archangelus: Sanctus_28_b
+Missa Sacerdotes Domini: Sanctus_47_b
+Missa Sanctorum meritis: Sanctus_50_b
+Missa Sine nomine (Mantuan): Sanctus_54_b
+Missa Spem In Alium: Sanctus_55_b
+Missa Veni Sancte Spiritus: Sanctus_62_b
+Missa Veni Sancte Spiritus: Sanctus_63_b
+Missa Virtute magna: Sanctus_66_b
+Missa In majoribus duplicibus: Sanctus_70_b
+Missa Jam Christus astra ascenderat: Sanctus_79_b
+Missa O magnum mysterium: Sanctus_89_b
+Missa Pater noster: Sanctus_98_b
+Missa Ad coenam Agni: Sanctus_b
+Missa De Beata Marie Virginis (II): Sanctus_rpt_b

@@ -1,0 +1,144 @@
+Missa Quem dicunt homines: Benedictus_41_a
+Missa Confitebor tibi: Sanctus_11_b
+Missa Inviolata: Kyrie_82
+Missa O Rex gloriae: Credo_89_c
+Missa Lauda Sion: Kyrie_87
+Missa Hodie Christus Natus Est: Credo_29_e
+Missa Nasce la gioia mia: Credo_84_b
+Missa Quam pulchra es: Kyrie_44
+Missa Regina coeli (1601): Benedictus_44_a
+Missa Sine nomine (Mantuan): Sanctus_54_c
+Missa Brevis: Agnus_I_12
+Missa Panem nostrum: Credo_93_b
+Missa Primi toni: Sanctus_37
+Missa De Beata Marie Virginis (I): Gloria_15_d
+Missa Jam Christus astra ascenderat: Agnus_I_65
+Missa Veni Sancte Spiritus: Benedictus_62
+Missa Dies sanctificatus: Benedictus_20_b
+Missa Ecce sacerdos magnus: Sanctus_24_a
+Missa L'homme arme (1582): Agnus_I_70
+Missa Sanctorum meritis: Credo_49_c
+Missa Sine nomine (1567): Credo_33_b
+Missa Jam Christus astra ascenderat: Sanctus_79_a
+Missa Quam pulchra es: Benedictus_39_a
+Missa Laudate Dominum: Credo_80_d
+Missa In semidupl. maj. (II): Benedictus_72_a
+Missa Panis quem ego dabo: Sanctus_96_a
+Missa Brevis: Kyrie_15
+Missa Virtute magna: Gloria_67
+Missa De beata virgine (1567): Gloria_18
+Missa Gia fu chi m'ebbe cara: Agnus_03
+Missa In majoribus duplicibus: Kyrie_76
+Missa Descendit angelus Domini: Agnus_I_16
+Missa Sanctorum meritis: Kyrie_55
+Missa Hodie Christus Natus Est: Sanctus_30_b
+Missa Regina coeli (1601): Kyrie_49
+Missa O Rex gloriae: Benedictus_90_b
+Missa Dies sanctificatus: Gloria_20_a
+Missa Illumina oculos meos: Credo_30_b
+Missa O Regem coeli: Sanctus_90
+Missa Primi toni: Agnus_I_30
+Missa Inviolata: Gloria_77_b
+Missa Quam pulchra es: Credo_38_a
+Missa Tu es Petrus (1887): Benedictus_59_a
+Missa Veni creator Spiritus: Credo_60_b
+Missa Ascendo ad Patrem: Benedictus_03_a
+Missa In festis Apostolorum (II): Gloria_69_e
+Missa In semidupl. maj. (II): Sanctus_73_b
+Missa Regina coeli (1600): Benedictus_43_a
+Missa Dum complerentur: Credo_20_b
+Missa Illumina oculos meos: Benedictus_30
+Missa In illo tempore: Kyrie_75
+Missa Lauda Sion: Gloria_82_a
+Missa De Beata Marie Virginis (I): Sanctus_12_b
+Missa Quam pulchra es: Sanctus_39
+Missa Ecce sacerdos magnus: Gloria_25
+Missa L'homme arme (1582): Credo_82
+Missa Salvum me fac: Benedictus_49
+Missa In majoribus duplicibus: Benedictus_69_b
+Missa Pater noster: Sanctus_98_c
+Missa Memor esto: Benedictus_84_a
+Missa Io mi son giovinetta (1570): Sanctus_77_b
+Missa Jesu Nostra Redemptio: Credo_78_a
+Missa Regina coeli (1601): Benedictus_44_b
+Missa Ave regina coelorum: Credo_11_e
+Missa In illo tempore: Credo_67_e
+Missa Dum esset summus pontifex: Gloria_23
+Missa In festis Apostolorum (II): Gloria_69_d
+Missa Primi toni: Benedictus_36_b
+Missa Quando lieta sperai: Benedictus_40_a
+Missa Tu es Petrus (1887): Credo_58_b
+Missa Sine nomine (1567): Gloria_35
+Missa Sacerdos et pontifex: Benedictus_46_a
+Missa Sine nomine (Mantuan): Credo_53_a
+Missa Descendit angelus Domini: Credo_17_b
+Missa Dilexi quoniam: Credo_19_b
+Missa Illumina oculos meos: Credo_30_d
+Missa Io mi son giovinetta (1570): Credo_75_c
+Missa Panis quem ego dabo: Sanctus_96_b
+Missa Io mi son giovinetta (1570): Gloria_78_c
+Missa Quinti toni: Benedictus_42_a
+Missa Dies sanctificatus: Sanctus_21
+Missa Emendemus in melius: Agnus_I_23
+Missa Dies sanctificatus: Credo_18_d
+Missa Iste confessor: Sanctus_78
+Missa Quam pulchra es: Agnus_I_33
+Missa Primi toni: Gloria_38
+Missa Viri Galilaei: Gloria_66_b
+Missa Dilexi quoniam: Benedictus_21_a
+Missa Aeterna Christi munera: Kyrie_02
+Missa Spem In Alium: Credo_54_d
+Missa Sine nomine (1567): Sanctus_34
+Missa Veni creator Spiritus: Credo_60_d
+Missa In majoribus duplicibus: Credo_68_c
+Missa Ad fugam: Sanctus_00_c
+Missa In majoribus duplicibus: Agnus_I_58
+Missa Descendit angelus Domini: Sanctus_18
+Missa Ave Maria (1594): Credo_08_a
+Missa Virtute magna: Credo_64_c
+Missa O sacrum convivium: Sanctus_92_b
+Missa Ave Maria (1594): Benedictus_06
+Missa De beata virgine (1570): Kyrie_19_b
+Missa Ad coenam Agni: Kyrie_b
+Missa De beata virgine (1567): Credo_13_c
+Missa In minoribus duplicibus: Sanctus_71_b
+Missa Sine nomine (Mantuan): Credo_53_c
+Missa Regina coeli (1601): Credo_43_a
+Missa Virtute magna: Sanctus_66_a
+Missa Sanctorum meritis: Agnus_I_44
+Missa Dum complerentur: Sanctus_22_b
+Missa Brevis: Benedictus_11_b
+Missa Aeterna Christi munera: Credo_02_c
+Missa Laudate Dominum: Kyrie_88_b
+Missa Assumpta est Maria: Credo_07_b
+Missa Dum esset summus pontifex: Sanctus_19
+Missa L'homme arme (1582): Sanctus_84
+Missa Fratres Ego Enim Accepi: Benedictus_23_a
+Missa In duplicibus minoribus (I): Credo_31_e
+Missa Aeterna Christi munera: Gloria_02
+Missa Nasce la gioia mia: Kyrie_92_b
+Missa Virtute magna: Agnus_I_57
+Missa Sine nomine (1567): Agnus_I_27
+Missa Sine nomine (1567): Benedictus_33
+Missa Iste confessor: Kyrie_84
+Missa Sine nomine (1599): Benedictus_53_a
+Missa Jesu Nostra Redemptio: Agnus_I_66
+Missa Sicut lilium inter spinas: Benedictus_51_a
+Missa Aeterna Christi munera: Credo_02_a
+Missa Inviolata: Gloria_77_a
+Missa In illo tempore: Sanctus_69_a
+Missa In majoribus duplicibus: Sanctus_70_a
+Missa Veni Sancte Spiritus: Benedictus_63
+Missa Iste confessor: Gloria_79
+Missa Sine nomine (1567): Credo_33_c
+Missa Spem In Alium: Agnus_I_47
+Missa Sicut lilium inter spinas: Credo_50_b
+Missa Io mi son giovinetta (1570): Credo_75_a
+Missa L'homme arme (1582): Kyrie_90
+Missa Aeterna Christi munera: Agnus_I_01
+Missa O Regem coeli: Benedictus_89_b
+Missa Beatus Laurentius: Benedictus_09_a
+Missa Gabriel Archangelus: Agnus_I_25
+Missa In festis Apostolorum (II): Sanctus_68_b
+Missa Gia fu chi m'ebbe cara: Kyrie_33
+Missa Ecce sacerdos magnus: Agnus_III_b
