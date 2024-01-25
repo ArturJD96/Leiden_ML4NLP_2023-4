@@ -1,0 +1,6 @@
+[submodule "composer_concept"]
+	path = composer_concept
+	url = https://github.com/CPJKU/composer_concept.git
+[submodule "vis-framework"]
+	path = vis-framework
+	url = https://github.com/ArturJD96/vis-framework.git
