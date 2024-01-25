@@ -1,14 +1,16 @@
-1. McKay, Toward a Theory of Formal Function for Renaissance Music
+1. MacKay, Toward a Theory of Formal Function for Renaissance Music
 
 
+music21 -> chord.Chord (chordify) -> vector/factor to intervals of pitches -> (Machine Learning) deterime the "Falls into Presentation Types in Two, Three and Four Voices (MacKay)" -> Likely possible presentation type of given score -> (NLP) generate response. 
 
 
-
+### Old notes
 
 Applying NLP into the area of counterpoint expert system explainability
 
-1. Recognize the cadence
-2. LM: why is it a cadence?
+1. Recognize the clausulae
+2. LM: why is it a clausulae?
+
 
 NLP: summarization
 

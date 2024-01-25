@@ -29,9 +29,11 @@ with open('data/MacKay_presentation_types.json', 'r') as file:
 # pca.fit_transform(scores)
 
 scaler = StandardScaler()
+
 scores_standardized = scaler.fit_transform(scores_sliced)
 
 X_train, X_test, y_train, y_test = train_test_split(scores_standardized, presentation_types, test_size=0.2, random_state=42)
+
 
 knn_classifier = KNeighborsClassifier(n_neighbors=5) # arbitrary number
 knn_classifier.fit(X_train, y_train)

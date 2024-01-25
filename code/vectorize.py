@@ -4,9 +4,10 @@ import re
 import numpy
 
 SCORES = 0 # when 0, take all
+
 PARTS = 0 # how many 'parts' ('voices' or **kern spines) in a score do we look for (if 0, disregard this condition).
 PART_MAX = 8 # highest number of parts ('voices') in the database
-OFFSET_MAX = (222 * 8) # first 8 bars, 4 half-notes each [in quarter notes length]. Note: smallest has 24; longest has 1776
+OFFSET_MAX = (8 * 8) # first 8 bars, 4 half-notes each [in quarter notes length]. Note: smallest has 24; longest has 1776
 
 '''
     Get paths to Palestrina files (in 'kern/humdrum' .krn format)
@@ -20,7 +21,6 @@ palestrina_score_paths = palestrina_score_paths[:(SCORES if SCORES else len(pale
 '''
 palestrina_scores = []
 labels = []
-smallest_duration = 0
 
 for i, path in enumerate(palestrina_score_paths):
 
@@ -31,7 +31,7 @@ for i, path in enumerate(palestrina_score_paths):
         palestrina_score_paths = palestrina_score_paths[:i] + palestrina_score_paths[i+1:]
     else:
         if not PARTS or parts == PARTS:
-
+          
             # add score
             score = music21.corpus.parse(path)
             palestrina_scores.append(score)
@@ -41,8 +41,6 @@ for i, path in enumerate(palestrina_score_paths):
             part_name = path.stem
             label = f'{mass_name}: {part_name}'
             labels.append(label)
-
-
 
 # print(f'All Palestrina {PARTS}-part scores: {len(palestrina_scores)}')
 
