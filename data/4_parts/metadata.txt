@@ -5,4 +5,4 @@ following settings:
 
 SCORES: all
 PARTS: 4
-OFFSET_MAX: 64
+OFFSET_MAX: 72

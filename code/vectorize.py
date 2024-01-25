@@ -4,9 +4,9 @@ import re
 import numpy
 
 SCORES = 0 # when 0, take all
-PARTS = 0 # how many 'parts' ('voices' or **kern spines) in a score do we look for (if 0, disregard this condition).
-PART_MAX = 8 # highest number of parts ('voices') in the database
-OFFSET_MAX = (222 * 8) # first 8 bars, 4 half-notes each [in quarter notes length]. Note: smallest has 24; longest has 1776
+PARTS = 4 # how many 'parts' ('voices' or **kern spines) in a score do we look for (if 0, disregard this condition).
+PART_MAX = 4 # highest number of parts ('voices') in the database
+OFFSET_MAX = (9 * 8) # first 9 bars, 4 half-notes each [in quarter notes length]. Note: smallest has 24; longest has 1776
 
 '''
     Get paths to Palestrina files (in 'kern/humdrum' .krn format)
@@ -30,7 +30,7 @@ for i, path in enumerate(palestrina_score_paths):
     except UnicodeDecodeError:
         palestrina_score_paths = palestrina_score_paths[:i] + palestrina_score_paths[i+1:]
     else:
-        if not PARTS or parts == PARTS:
+        if parts <= PART_MAX and not PARTS or parts == PARTS:
 
             # add score
             score = music21.corpus.parse(path)
@@ -72,7 +72,7 @@ for score_id, score in enumerate(palestrina_scores):
                 dim = part_id + (offset * PART_MAX)
                 vectors[score_id, dim] = midi
 
-data_path = pathlib.Path(f'data/{'all' if not PARTS else PARTS}_parts/')
+data_path = pathlib.Path(f"data/{'all' if not PARTS else PARTS}_parts/")
 data_path.mkdir(parents=True, exist_ok=True)
 numpy.save(data_path / 'score_vectors', vectors)
 
