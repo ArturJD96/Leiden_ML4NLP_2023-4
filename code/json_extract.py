@@ -1,5 +1,9 @@
 import json
+
+import pathlib
 import random
+
+data_dir = pathlib.Path('data/4_parts/')
 
 # Read the JSON file
 with open('data/McKay_presentation_types.json', 'r') as json_file:
@@ -9,15 +13,15 @@ with open('data/McKay_presentation_types.json', 'r') as json_file:
 # selected_entries = list(data.keys())
 
 # Read the list of random score titles from labels.txt
-with open('data/4_parts/test_labels.txt', 'r') as labels_file:
-    test_score_labels = [line.strip() for line in labels_file]
 
-print(len(test_score_labels))
+test_labels = (data_dir/'test_labels.txt').read_text().splitlines()
 
 labels_annotated = {}
-for label in test_score_labels:
+for label in test_labels:
     labels_annotated[label] = random.choice(presentation_types)
 
+json_annotations = json.dumps(labels_annotated, indent=1)
+(data_dir/'labes_annotated.json').write_text(json_annotations)
 
 
 # # Assign random score titles to the extracted entries

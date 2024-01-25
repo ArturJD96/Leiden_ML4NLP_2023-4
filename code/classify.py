@@ -1,6 +1,7 @@
 import pathlib
 import numpy as np
 import matplotlib.pyplot as plt
+import json
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -13,17 +14,26 @@ from sklearn.preprocessing import StandardScaler
 # import matplotlib.pyplot as plt
 # from sklearn.decomposition import PCA
 
-scores = np.load('data/all_parts/score_vectors.npy')
+# scores = np.load('data/4_parts/score_vectors.npy')
 
-labels = pathlib.Path('data/all_parts/labels_temp.txt').read_text().split('\n')
+# with open('data/MacKay_presentation_types.json', 'r') as file:
+#     presentation_types = json.load(file)
+
+scores = np.load('data/4_parts/train_data.npy')
+scores_sliced = scores[:15]
+
+with open('data/MacKay_presentation_types.json', 'r') as file:
+    presentation_types = json.load(file)
 
 # pca = PCA(n_components=2)
 # pca.fit_transform(scores)
 
 scaler = StandardScaler()
-scores_standardized = scaler.fit_transform(scores)
 
-X_train, X_test, y_train, y_test = train_test_split(scores_standardized, labels, test_size=0.2, random_state=42)
+scores_standardized = scaler.fit_transform(scores_sliced)
+
+X_train, X_test, y_train, y_test = train_test_split(scores_standardized, presentation_types, test_size=0.2, random_state=42)
+
 
 knn_classifier = KNeighborsClassifier(n_neighbors=5) # arbitrary number
 knn_classifier.fit(X_train, y_train)

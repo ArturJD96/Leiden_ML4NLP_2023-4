@@ -11,6 +11,7 @@ Applying NLP into the area of counterpoint expert system explainability
 1. Recognize the clausulae
 2. LM: why is it a clausulae?
 
+
 NLP: summarization
 
 Lassus Duo -> NLP model -> "This piece starts with an imitative duo, then one voice does somethign etcetc and it ends on cadence."
