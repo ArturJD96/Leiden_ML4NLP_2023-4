@@ -11,21 +11,12 @@ from sklearn.metrics import classification_report
 from sklearn.preprocessing import StandardScaler
 
 
-# import numpy
-# import matplotlib.pyplot as plt
-# from sklearn.decomposition import PCA
-
-# scores = np.load('data/4_parts/score_vectors.npy')
-
-# with open('data/MacKay_presentation_types.json', 'r') as file:
-#     presentation_types = json.load(file)
-
 data_dir = pathlib.Path('data/4_parts/')
 
 with open(f'{data_dir.__str__()}/labels_annotated.json', 'r') as file:
-    presentation_types = list(json.load(file).values())
+    annotations = list(json.load(file).values())
 
-scores_sliced = np.load(data_dir/'score_vectors.npy')[:len(presentation_types)]
+scores_sliced = np.load(data_dir/'score_vectors.npy')[:len(annotations)]
 
 # with open(f'data/MacKay_presentation_types', 'r') as file:
 #     presentation_types = json.load(file)
@@ -64,6 +55,8 @@ print(f'Accuracy: {accuracy:.2f}')
 report = classification_report(y_test, predictions)
 print("Classification Report:")
 print(report)
+
+### run KMeans ###
 
 # print("True Label\tPredicted Label")
 # for true_label, predicted_label in zip(y_test, predictions):
