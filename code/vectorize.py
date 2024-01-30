@@ -3,10 +3,13 @@ import music21
 import re
 import numpy
 
+# import pickle # rewrite to store the music21 scores as .pkl files.
+
 SCORES = 0 # when 0, take all
-PARTS = 4 # how many 'parts' ('voices' or **kern spines) in a score do we look for (if 0, disregard this condition).
-PART_MAX = 4 # highest number of parts ('voices') in the database
-OFFSET_MAX = (9 * 8) # first 9 bars, 4 half-notes each [in quarter notes length]. Note: smallest has 24; longest has 1776
+PARTS = 0 # how many 'parts' ('voices' or **kern spines) in a score do we look for (if 0, disregard this condition).
+PART_MAX = 8 # highest number of parts ('voices') in the database
+# OFFSET_MAX = (9 * 8) # first 9 bars, 4 half-notes each [in quarter notes length]. Note: smallest has 24; longest has 1776
+OFFSET_MAX = 1
 
 '''
     Get paths to Palestrina files (in 'kern/humdrum' .krn format)
