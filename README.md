@@ -5,3 +5,10 @@ Google Drive: https://drive.google.com/drive/folders/1mMV4X_hmfVgMZUVkpMOSdv-SM2
 
 What we want to achieve:
 Language model (expert system) that describes, from a given excerpt from the Palestrina score, occuring clausulae.
+
+Prerequisites:
+- python 3.7
+- miditoolkit 1.0.1
+- torch 1.3.1
+- torchvision 0.4.2
+- pytorch-fast-transformers
