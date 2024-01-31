@@ -13,7 +13,8 @@ Compatible only with Python 3.7
 - madmom
 - chorder 0.1.4
 - scikit-learn 1.0.2
-- music21 7.3.3
+
+Else it's run on Python 3.12
 
 Prerequsites to train the data:
 - torch 1.3.1
