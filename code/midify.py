@@ -1,7 +1,6 @@
 import pathlib
 import music21
 import re
-import numpy
 
 import pickle
 import matplotlib.pyplot as plt
@@ -11,8 +10,9 @@ SCORES = 0 # when 0, take all
 PARTS = 0 # how many 'parts' ('voices' or **kern spines) in a score do we look for (if 0, disregard this condition).
 PART_MAX = 8 # highest number of parts ('voices') in the database
 
-VALID_SCORES = 1278
+VALID_SCORES = 1243
 SCORES = SCORES or VALID_SCORES
+print(SCORES)
 
 '''
     Get paths to Palestrina files (in 'kern/humdrum' .krn format)
@@ -59,12 +59,12 @@ palestrina_score_paths:list[pathlib.PosixPath] = music21.corpus.getComposer('pal
 
 while not file_with_pickled_music21_scores:
 
-    print('iteration!')
-
     try:
 
         file_with_pickled_music21_scores = open(pickled_scores_music21_dir, 'rb')
         palestrina_scores = pickle.load(file_with_pickled_music21_scores)
+
+        print(len(palestrina_scores))
 
         if len(palestrina_scores) != SCORES:
             raise FileNotFoundError("The already compiled .pkl file does not have requested metadata and needs to be recompiled")
@@ -76,9 +76,16 @@ while not file_with_pickled_music21_scores:
         pickle.dump(palestrina_scores, open(pickled_scores_music21_dir, 'wb'))
 
 
-print(len(palestrina_scores))
-# labels = [score.metadata.getCustom('label') for score in palestrina_scores]
+print('Scores:', len(palestrina_scores))
+labels = []
+for score in palestrina_scores:
+    label = score.metadata.getCustom('label')
+    label = str(label[0]) if type(label) is tuple else label
+    labels.append(label)
 
 '''
     Save all the scores as midi
 '''
+for i, score in enumerate(palestrina_scores):
+    score.flatten().write('midi', fp=f'data/midi/{labels[i]}.midi')
+    
