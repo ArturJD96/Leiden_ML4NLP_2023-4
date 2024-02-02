@@ -7,9 +7,12 @@ What we want to achieve:
 Language model (expert system) that describes, from a given excerpt from the Palestrina score, occuring clausulae.
 
 System:
-- Ubuntu 20.04 via WSL2
+- Ubuntu 20.04 via WSL2 (Windows 11)
 - Nvidia RTX 3080 TI
-- (AI: Eres to update RAM, the driver and CUDA version)
+- 32 GB RAM
+- Driver Version: 471.41
+- CUDA Version: 11.4
+- CUDA compilation tools release 10.1
 
 Prerequisites to process the data:
 Compatible only with Python 3.7
@@ -22,9 +25,8 @@ Compatible only with Python 3.7
 Else it's run on Python 3.12
 
 Prerequsites to train the data:
-- torch 1.3.1
-- torchvision 0.4.2
-- pytorch-fast-transformers
+- torch 1.7.1+cu110
+- pytorch-fast-transformers 0.4.0
 - miditoolkit 1.0.1
 
 Run those scripts:
