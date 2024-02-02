@@ -10,7 +10,7 @@ SCORES = 0 # when 0, take all
 PARTS = 0 # how many 'parts' ('voices' or **kern spines) in a score do we look for (if 0, disregard this condition).
 PART_MAX = 8 # highest number of parts ('voices') in the database
 
-VALID_SCORES = 1208
+VALID_SCORES = 1243
 SCORES = SCORES or VALID_SCORES
 
 music21.defaults.ticksPerQuarter = 4
@@ -58,6 +58,8 @@ pickled_scores_music21_dir = pathlib.Path('data/music21/palestrina_scores.pkl')
 
 palestrina_score_paths:list[pathlib.PosixPath] = music21.corpus.getComposer('palestrina')[:SCORES]
 
+dumped = False
+
 while not file_with_pickled_music21_scores:
 
     try:
@@ -65,7 +67,7 @@ while not file_with_pickled_music21_scores:
         file_with_pickled_music21_scores = open(pickled_scores_music21_dir, 'rb')
         palestrina_scores = pickle.load(file_with_pickled_music21_scores)
 
-        if len(palestrina_scores) != SCORES:
+        if not dumped or len(palestrina_scores) != SCORES:
             raise FileNotFoundError("The already compiled .pkl file does not have requested metadata and needs to be recompiled")
 
     except FileNotFoundError:
@@ -73,7 +75,7 @@ while not file_with_pickled_music21_scores:
         print('Parsing **kern humdrum files to music21 format (might take a while)...')
         palestrina_scores = get_scores(palestrina_score_paths)
         pickle.dump(palestrina_scores, open(pickled_scores_music21_dir, 'wb'))
-
+        dumped = True
 
 print('Scores:', len(palestrina_scores))
 labels = []

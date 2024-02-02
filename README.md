@@ -26,5 +26,5 @@ Run those scripts:
 python3.12 code/midify.py;
 python3.7 make-corpus/midi2corpus.py;
 python3.7 make-corpus/corpus2events.py;
-python3.7 make-corpus/events2words;
+python3.7 make-corpus/events2words.py;
 python3.7 make-corpus/compile.py;

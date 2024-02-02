@@ -1,8 +1,0 @@
-
-This file was extracted
-using vectorize.py
-following settings:
-
-SCORES: all
-PARTS: all
-OFFSET_MAX: 1

@@ -31,7 +31,6 @@ import saver
 import pathlib
 from collections.abc import Iterable
 
-
 ################################################################################
 # config
 ################################################################################
@@ -44,8 +43,8 @@ MODE = 'train'
 # path_data_root = '..../dataset/representations/uncond/cp/ailab17k_from-scratch_cp'
 # path_train_data = os.path.join(path_data_root, 'train_data_linear.npz')
 # path_dictionary =  os.path.join(path_data_root, 'dictionary.pkl')
-path_data_root = pathlib.Path('../data/cp/corpus/')
-path_train_data = path_data_root / 'train_data_linear.npz'
+path_data_root = pathlib.Path('data')
+path_train_data = path_data_root / 'corpus/train_data_linear.npz'
 path_dictionary = path_data_root / 'dictionary.pkl'
 
 ###--- training config ---###
@@ -413,7 +412,7 @@ class TransformerModel(nn.Module):
         cur_word_type = sampling(y_type_logit, p=0.90)
 
         type_word_t = torch.from_numpy(
-                    np.array([cur_word_type])).long().unsqueeze(0)#.cuda().unsqueeze(0)
+                    np.array([cur_word_type])).long().cuda().unsqueeze(0)
 
         tf_skip_type = self.word_emb_type(type_word_t).squeeze(0)
 
@@ -472,7 +471,7 @@ class TransformerModel(nn.Module):
             h = None
             
             cnt_bar = 1
-            init_t = torch.from_numpy(init).long()#.cuda()
+            init_t = torch.from_numpy(init).long().cuda()
             print('------ initiate ------')
             for step in range(init.shape[0]):
                 print_word_cp(init[step, :])
@@ -491,7 +490,7 @@ class TransformerModel(nn.Module):
                 print_word_cp(next_arr)
 
                 # forward
-                input_ = torch.from_numpy(next_arr).long()#.cuda()
+                input_ = torch.from_numpy(next_arr).long().cuda()
                 input_  = input_.unsqueeze(0).unsqueeze(0)
                 h, y_type, memory = self.forward_hidden(
                     input_, memory, is_training=False)
@@ -537,7 +536,7 @@ def train():
    
     # init
     net = TransformerModel(n_class)
-    net#.cuda()
+    net.cuda()
     net.train()
     n_parameters = network_paras(net)
     print('n_parameters: {:,}'.format(n_parameters))
@@ -588,9 +587,9 @@ def train():
             batch_mask = train_mask[bidx_st:bidx_ed]
 
             # to tensor
-            batch_x = torch.from_numpy(batch_x).long()#.cuda()
-            batch_y = torch.from_numpy(batch_y).long()#.cuda()
-            batch_mask = torch.from_numpy(batch_mask).float()#.cuda()
+            batch_x = torch.from_numpy(batch_x).long().cuda()
+            batch_y = torch.from_numpy(batch_y).long().cuda()
+            batch_mask = torch.from_numpy(batch_mask).float().cuda()
 
             # run
             losses = net.train_step(batch_x, batch_y, batch_mask)
@@ -667,7 +666,7 @@ def generate():
 
     # init model
     net = TransformerModel(n_class, is_training=False)
-    # net.cuda()
+    net.cuda()
     net.eval()
     
     # load model
