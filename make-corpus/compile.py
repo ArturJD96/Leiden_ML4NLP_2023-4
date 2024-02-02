@@ -143,7 +143,7 @@ if __name__ == '__main__':
     # validation_songs = json.load(open('../validation_songs.json', 'r'))
     # [AJD] mod starts ******
     # print(len(validation_songs))
-    all_song_labels = open('data/all_parts/labels.txt', 'r').read().splitlines()
+    all_song_labels = open('data/music21/labels.txt', 'r').read().splitlines()
     labels_json_string = '["' + '","'.join(all_song_labels) + '"]'
     labels_json = json.loads(labels_json_string)
     _, validation_songs = train_test_split(all_song_labels, test_size=0.05, random_state=42)

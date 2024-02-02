@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 SCORES = 0 # when 0, take all
 PARTS = 0 # how many 'parts' ('voices' or **kern spines) in a score do we look for (if 0, disregard this condition).
 PART_MAX = 8 # highest number of parts ('voices') in the database
-OFFSET_MAX = 0 # [in quarter notes length]. Note: smallest has 24; longest has 1776
+OFFSET_MAX = 408 # [in quarter notes length]. Note: smallest has 24; longest has 1776
 
 VALID_SCORES = 1243
 SCORES = SCORES or VALID_SCORES
@@ -99,11 +99,16 @@ for score in palestrina_scores:
     labels.append(label)
 
 '''
+    Crop scores by the (quarterNoteLenght) offset
+'''
+croped_scores = [score.flatten().getElementsByOffset(0, OFFSET_MAX, includeEndBoundary=False).stream() for score in palestrina_scores]
+
+'''
     Save all the scores as midi
 '''
-for score, label in zip(palestrina_scores, labels):
+for score, label in zip(croped_scores, labels):
     # merge all ties BEFORE!!!
-    score.flatten().write('midi', fp=f'data/midi/{label}.midi')
+    score.write('midi', fp=f'data/midi/{label}.midi')
 
 '''
     Save label file as txt
@@ -113,5 +118,5 @@ for score, label in zip(palestrina_scores, labels):
 '''
     Save metadata file
 '''
-metadata = get_metadata(len(palestrina_scores))
+metadata = get_metadata(len(croped_scores))
 (data_path / 'music21/metadata.txt').write_text(metadata)
