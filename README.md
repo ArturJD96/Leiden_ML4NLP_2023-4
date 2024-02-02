@@ -4,7 +4,7 @@ Final project for the course Machine Learning for NLP with prof. Raaijmakers, Le
 Google Drive: https://drive.google.com/drive/folders/1mMV4X_hmfVgMZUVkpMOSdv-SM2QyDCMD?usp=sharing
 
 What we want to achieve:
-Language model (expert system) that describes, from a given excerpt from the Palestrina score, occuring clausulae.
+Using preexisting compound-word-transformer to generate Palestrina score (16th Century)
 
 System:
 - Ubuntu 20.04 via WSL2 (Windows 11)
