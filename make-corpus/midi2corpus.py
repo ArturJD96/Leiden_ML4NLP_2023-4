@@ -13,7 +13,7 @@ import seaborn as sns
 # ================================================== #  
 #  Configuration                                     #
 # ================================================== #  
-BEAT_RESOL = 480
+BEAT_RESOL = 4
 BAR_RESOL = BEAT_RESOL * 4
 TICK_RESOL = BEAT_RESOL // 4
 INSTR_NAME_MAP = {'piano': 0}
@@ -52,7 +52,7 @@ def traverse_dir(
                     if str_ not in file:
                         continue
                 mix_path = os.path.join(root, file)
-                pure_path = mix_path[len(root_dir)+1:] if is_pure else mix_path
+                pure_path = mix_path[len(str(root_dir))+1:] if is_pure else mix_path
                 if not is_ext:
                     ext = pure_path.split('.')[-1]
                     pure_path = pure_path[:-(len(ext)+1)]
@@ -155,12 +155,12 @@ def proc_one(path_midi, path_outfile):
             note.shift = note.start - quant_time 
             note.shift = DEFAULT_SHIFT_BINS[np.argmin(abs(DEFAULT_SHIFT_BINS-note.shift))]
 
-            # duration
-            note_duration = note.end - note.start
-            if note_duration > BAR_RESOL:
-                note_duration = BAR_RESOL
-            ntick_duration = int(np.round(note_duration / TICK_RESOL) * TICK_RESOL)
-            note.duration = ntick_duration
+            # duration [AJD] COMMENTED OUT
+            # note_duration = note.end - note.start
+            # if note_duration > BAR_RESOL:
+            #     note_duration = BAR_RESOL
+            # ntick_duration = int(np.round(note_duration / TICK_RESOL) * TICK_RESOL)
+            # note.duration = ntick_duration
 
             # append
             note_grid[quant_time].append(note)
@@ -225,8 +225,8 @@ def proc_one(path_midi, path_outfile):
 
 if __name__ == '__main__':
      # paths
-    path_indir = pathlib.Path('../data/midi') #'./midi_analyzed'
-    path_outdir = '../../data/midi/corpus' #'./corpus'
+    path_indir = pathlib.Path('data/midi') #'./midi_analyzed'
+    path_outdir = pathlib.Path('data/corpus') #'./corpus'
     os.makedirs(path_outdir, exist_ok=True)
 
     # list files

@@ -21,3 +21,10 @@ Prerequsites to train the data:
 - torchvision 0.4.2
 - pytorch-fast-transformers
 - miditoolkit 1.0.1
+
+Run those scripts:
+python3 code/midify.py;
+python3 make-corpus/midi2corpus.py;
+python3 make-corpus/corpus2events.py;
+python3 make-corpus/events2words;
+python3 make-corpus/compile.py;
