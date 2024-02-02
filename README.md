@@ -6,6 +6,11 @@ Google Drive: https://drive.google.com/drive/folders/1mMV4X_hmfVgMZUVkpMOSdv-SM2
 What we want to achieve:
 Language model (expert system) that describes, from a given excerpt from the Palestrina score, occuring clausulae.
 
+System:
+- Ubuntu 20.04 via WSL2
+- Nvidia RTX 3080 TI
+- (AI: Eres to update RAM, the driver and CUDA version)
+
 Prerequisites to process the data:
 Compatible only with Python 3.7
 - miditoolkit 1.0.1
