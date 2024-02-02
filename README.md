@@ -23,8 +23,8 @@ Prerequsites to train the data:
 - miditoolkit 1.0.1
 
 Run those scripts:
-python3 code/midify.py;
-python3 make-corpus/midi2corpus.py;
-python3 make-corpus/corpus2events.py;
-python3 make-corpus/events2words;
-python3 make-corpus/compile.py;
+python3.12 code/midify.py;
+python3.7 make-corpus/midi2corpus.py;
+python3.7 make-corpus/corpus2events.py;
+python3.7 make-corpus/events2words;
+python3.7 make-corpus/compile.py;
