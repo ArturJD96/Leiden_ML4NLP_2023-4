@@ -71,7 +71,7 @@ num_songs = 50 # [AJD] MUST CHANGE TO CURRENT SIZE OF THE VALIDATION SET !!!
 # File IO
 ################################################################################
 
-os.environ['CUDA_VISIBLE_DEVICES'] = str(gid)
+# os.environ['CUDA_VISIBLE_DEVICES'] = str(gid)
 BEAT_RESOL = 480 // 4 # [AJD] was 480
 BAR_RESOL = BEAT_RESOL * 4
 TICK_RESOL = BEAT_RESOL // 4
@@ -412,7 +412,7 @@ class TransformerModel(nn.Module):
         cur_word_type = sampling(y_type_logit, p=0.90)
 
         type_word_t = torch.from_numpy(
-                    np.array([cur_word_type])).long().cuda().unsqueeze(0)
+                    np.array([cur_word_type])).long().to(torch.device('mps')).unsqueeze(0)
 
         tf_skip_type = self.word_emb_type(type_word_t).squeeze(0)
 
@@ -471,7 +471,7 @@ class TransformerModel(nn.Module):
             h = None
             
             cnt_bar = 1
-            init_t = torch.from_numpy(init).long().cuda()
+            init_t = torch.from_numpy(init).long().to(torch.device('mps'))
             print('------ initiate ------')
             for step in range(init.shape[0]):
                 print_word_cp(init[step, :])
@@ -490,7 +490,7 @@ class TransformerModel(nn.Module):
                 print_word_cp(next_arr)
 
                 # forward
-                input_ = torch.from_numpy(next_arr).long().cuda()
+                input_ = torch.from_numpy(next_arr).long().to(torch.device('mps'))
                 input_  = input_.unsqueeze(0).unsqueeze(0)
                 h, y_type, memory = self.forward_hidden(
                     input_, memory, is_training=False)
@@ -536,7 +536,7 @@ def train():
    
     # init
     net = TransformerModel(n_class)
-    net.cuda()
+    net.to(torch.device('mps'))
     net.train()
     n_parameters = network_paras(net)
     print('n_parameters: {:,}'.format(n_parameters))
@@ -587,9 +587,9 @@ def train():
             batch_mask = train_mask[bidx_st:bidx_ed]
 
             # to tensor
-            batch_x = torch.from_numpy(batch_x).long().cuda()
-            batch_y = torch.from_numpy(batch_y).long().cuda()
-            batch_mask = torch.from_numpy(batch_mask).float().cuda()
+            batch_x = torch.from_numpy(batch_x).long().to(torch.device('mps'))
+            batch_y = torch.from_numpy(batch_y).long().to(torch.device('mps'))
+            batch_mask = torch.from_numpy(batch_mask).float().to(torch.device('mps'))
 
             # run
             losses = net.train_step(batch_x, batch_y, batch_mask)
@@ -666,7 +666,7 @@ def generate():
 
     # init model
     net = TransformerModel(n_class, is_training=False)
-    net.cuda()
+    net.to(torch.device('mps'))
     net.eval()
     
     # load model
