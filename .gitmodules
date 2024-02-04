@@ -1,0 +1,12 @@
+[submodule "composer_concept"]
+	path = composer_concept
+	url = https://github.com/CPJKU/composer_concept.git
+[submodule "vis-framework"]
+	path = vis-framework
+	url = https://github.com/ArturJD96/vis-framework.git
+[submodule "compound-word-transformer"]
+	path = compound-word-transformer
+	url = https://github.com/YatingMusic/compound-word-transformer.git
+[submodule "mgeval"]
+	path = mgeval
+	url = https://github.com/DimejiOladepo/mgeval.git
