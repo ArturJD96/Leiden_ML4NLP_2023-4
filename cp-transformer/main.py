@@ -47,7 +47,7 @@ path_train_data = path_data_root / 'corpus/train_data_linear.npz'
 path_dictionary = path_data_root / 'dictionary.pkl'
 
 ###--- training config ---###
-D_MODEL = 64 #512
+D_MODEL = 128 #512
 N_LAYER = 12 #12
 N_HEAD = 8 #8    
 path_exp = pathlib.Path('exp/')
@@ -71,11 +71,7 @@ num_songs = 50 # [AJD] MUST CHANGE TO CURRENT SIZE OF THE VALIDATION SET !!!
 ################################################################################
 
 # os.environ['CUDA_VISIBLE_DEVICES'] = str(gid)
-<<<<<<< HEAD
 BEAT_RESOL = 4 # [AJD] was 480
-=======
-BEAT_RESOL = 480 // 4 # [AJD] was 480
->>>>>>> ad9e273fe9ae84b8eba0bf2de8ca1a440b1a6f12
 BAR_RESOL = BEAT_RESOL * 4
 TICK_RESOL = BEAT_RESOL // 4
 

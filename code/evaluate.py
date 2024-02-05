@@ -7,11 +7,14 @@ import matplotlib.pyplot as plt
 from mgeval import core, utils
 from sklearn.model_selection import LeaveOneOut
 
+# this file most likely needs to be run from /mgeval directory.
+
 num_samples = 61
 
 set1 = glob.glob('data/midi/*.midi')
 set1_eval = {'total_used_pitch':np.zeros((num_samples,1))}
 metrics_list = list(set1_eval.keys())
+print(set1)
 for i in range(0, num_samples):
     feature = core.extract_feature(set1[i])
     set1_eval[metrics_list[0]][i] = getattr(core.metrics(), metrics_list[0])(feature)
@@ -59,14 +62,15 @@ plot_set1_intra = np.transpose(set1_intra,(1, 0, 2)).reshape(len(metrics_list), 
 plot_set2_intra = np.transpose(set2_intra,(1, 0, 2)).reshape(len(metrics_list), -1)
 plot_sets_inter = np.transpose(sets_inter,(1, 0, 2)).reshape(len(metrics_list), -1)
 for i in range(0,len(metrics_list)):
-    sns.kdeplot(plot_set1_intra[i], label='intra_set1')
-    sns.kdeplot(plot_sets_inter[i], label='inter')
-    sns.kdeplot(plot_set2_intra[i], label='intra_set2')
+    sns.kdeplot(plot_set1_intra[i], label='Palestrina-intra')
+    sns.kdeplot(plot_sets_inter[i], label='inter-Palestrina-Model')
+    sns.kdeplot(plot_set2_intra[i], label='Model-intra')
 
     plt.title(metrics_list[i])
     plt.xlabel('Euclidean distance')
     plt.legend()
-    plt.show()
+    plt.savefig("graphs/total_used_pitch.pgf", format='pgf')
+#   plt.show()
 
 for i in range(0, len(metrics_list)):
     print(metrics_list[i] + ':')
@@ -78,4 +82,3 @@ for i in range(0, len(metrics_list)):
     print(' demo_set2')
     print('  Kullback–Leibler divergence:',utils.kl_dist(plot_set2_intra[i], plot_sets_inter[i]))
     print('  Overlap area:', utils.overlap_area(plot_set2_intra[i], plot_sets_inter[i]))
-    

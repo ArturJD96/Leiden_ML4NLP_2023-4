@@ -1,0 +1,1 @@
+This folder contains scripts we used and adapted from the [https://github.com/YatingMusic/compound-word-transformer][compound word transformer] repository.

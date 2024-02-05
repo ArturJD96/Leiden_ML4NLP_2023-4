@@ -5,8 +5,6 @@ Google Drive: https://drive.google.com/drive/folders/1mMV4X_hmfVgMZUVkpMOSdv-SM2
 
 What we want to achieve:
 Using preexisting compound-word-transformer to generate Palestrina score (16th Century)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 Research questions:
 1. Evaluating how much chord-centered approach results in generation of polyphonic music
@@ -41,8 +39,6 @@ python3.7 make-corpus/midi2corpus.py;
 python3.7 make-corpus/corpus2events.py;
 python3.7 make-corpus/events2words.py;
 python3.7 make-corpus/compile.py;
-<<<<<<< HEAD
-
 
 Our model/data-preprocess/midi flaws:
 - Does not have satisyfing ending
@@ -61,5 +57,3 @@ EVALUATION:
  3. Perplexity?
  
  
-=======
->>>>>>> ad9e273fe9ae84b8eba0bf2de8ca1a440b1a6f12
