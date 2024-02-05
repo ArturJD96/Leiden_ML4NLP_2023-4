@@ -1,0 +1,183 @@
+\documentclass{article}
+\usepackage{fontspec}
+\usepackage{PRIMEarxiv}
+\usepackage{blindtext}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{pdfpages}
+\usepackage{lmodern}
+\usepackage{hyperref}
+% \usepackage{pgf}
+% \usepackage{pgfplots}
+\usepackage[
+    backend=biber,
+    style=ieee,
+    sortlocale=en-US,
+    natbib=true,
+    url=false, 
+    doi=true,
+    eprint=false
+]{biblatex}
+\addbibresource{references.bib}
+
+\usepackage{lilyglyphs}
+% \lilyOpticalSize{11}
+
+\pagestyle{fancy}
+\title{
+Using Compound Word Transformer for Classical Counterpoint Generation: Application, Evaluation, Prospects
+}
+\author{
+  Artur Dobija and Eres Ferro Bastian \\
+  Leiden University \\
+  Leiden \\
+  \texttt{a.j.dobija@umail.leidenuniv.nl};{eres.ferro.bastian@umail.leidenuniv.nl} \\
+}
+\date{}
+
+\begin{document}
+
+    \maketitle
+    \begin{abstract}
+    This paper explores music generation techniques based on Natural Language Processing (NLP) and focusing on a stylistically restricted context (Renaissance counterpoint of the composer Giovanni Pierluigi da Palestrina). The Compound Word Transformer model was used as the NLP-based music generation technique and trained with a portion of Palestrina's musical Masses database that was converted from \texttt{kern**} to \texttt{MIDI**} format. Inference was made to the model in order to generate new \texttt{MIDI**} files, evaluated using using pitch histograms, pairwise cross-validation relative metrics, and transition matrix comparisons. The results indicate that the model has the capability to capture the style and has the potential for further enhancements in consideration of human-centered evaluation metrics. The code for this research is available on GitHub. \url{https://github.com/ArturJD96/Leiden_ML4NLP_2023-4}
+    \end{abstract}
+
+\begin{multicols}{2}
+
+    \section{Introduction}
+        Language and music are both akin to their own kind of symbolic representations. Thus, the way we can approach language in machine learning should be applicable to music as well. However, the representation of music in digital domain is not so standardized as this of a language.
+        
+        In this instance, we will investigate how much an existing model architecture can perform when we train it in a very different musical genre. We focus on the style of Renaissance composer Giovanni Pierluigi da Palestrina (ca 1525-1594). The style of his choir pieces characterized by independent voice-leading and rather careful use of chromaticism. 
+        
+        The model we use is a compound word transformer \cite{hsiao_compound_2021}.
+        After training with database consisting of Palestrina's musical Masses, the inferred model produces new scores in the \texttt{MIDI} format. We compare the resulting files to the original artworks and investigate the techniques of such system's evaluation.
+
+        There are multiple previous works which focus on music generation. Several of them are inspired by machine learning techniques originating in the field of Natural Language Processing, like vector feature extraction using TF\*IDF \cite{mennen_pattern_nodate}, Full-Song Music over Dynamic Directed Hypergraphs \cite{huang2018music}, MuseBERT \cite{zeng_musicbert_2021} and MusicBert \cite{zeng2021musicbert}. However, most of the recent works have focused only on pop and classical music genres. Therefore, our research aims to fill the gap between application of NLP-inspired music generation techniques and older repertoire existing primarily as a symbolic representation (scores).
+
+        The code for our research is available at github\footnote{\href{https://github.com/ArturJD96/Leiden_ML4NLP_2023-4}{Github repo.}}
+        
+    \section{Methodology}
+
+        We investigate the prospects of applying NLP-specific machine learning techniques to the domain of stylistically restricted generative music. We focused on the Renaissance counterpoint style -- a field that has been already approached from the machine learning perspective \cite{adiloglu_machine_2007} \cite{nichols_modeling_2022} \cite{arthur_vicentino_2021} \cite{kalonaris_computational_2020} \cite{farbood_analysis_2001} and with promising NLP-specific implementations prospects \cite{mennen_pattern_nodate} \cite{nichols_modeling_2022} \cite{huang2018music}.
+        
+        We adapted Compound Word Transformer (\cite{hsiao_compound_2021}) which is a Transformer decoder architecture that separates tokens including relevant information to the symbolic music representation such as pitch, duration, velocity or dynamics and placement along the time grid (onset time). Being attention-based \cite{vaswani_attention_2023}, it is the most advanced and inexpensive model that we are able to run locally that utilizes an approach that could still be regarded as novel.
+    
+        The authors propose the use of various token \emph{types} corresponding to the score symbolic representation units (e.g. note pitch, duration). They develop a new tokenization method (musical \emph{compound word}) to already existing \texttt{MIDI} music tokenization techniques (\texttt{MIDI-like} \cite{MidiLike} and \texttt{REMI} \cite{remi}) and report a significant gain in the terms of performance without any quality sacrifice. 
+        
+        The compound word model was then trained by us with over 1200 \texttt{MIDI}ed Palestrina scores files (from \texttt{music21} corpus) for 100 epochs with 128 dimension size, 12 layers, 8 attention heads, 8 batch sizes and learning rate of 1e-4. Finally, we inferenced the model in order to extract predictions into set of \texttt{MIDI} files (using again Hsiao's model inference architecture). With the amount of data and the current configuration, we were able to generate a model with 0.19 loss after 2 hours of training.
+
+        For the analysis, we used two musically informed objective metrics from Yang \cite{yang_evaluation_2020}: pairwise cross-validation relative metric extracting the Euclidean distance of the pitch count among Palestrina-intra and Model-intra sets and feature transition matrix comparison.
+        
+    \section{Data}
+        
+        \paragraph{Corpus.}
+        In this research, we employ a digital edition of polyphonic masses by Giovanni Pierluigi da Palestrina based on \cite{palestrina1961opere}, encoded into \texttt{**kern} format by John Miller and accessed as a part of \texttt{music21} Python package (as a parsed corpus consisting of \texttt{Score} objects). The database contains score representation of over 100 masses, where each mass movement's section is stored in a separate \texttt{**kern} file.
+        
+        \subparagraph{Corrupted files.} Unfortunately, the corpus is partly corrupted and we had to filter out miscoded files (for details about the database and the mentioned issues, see footnotes in \cite[p. 6]{arthur_vicentino_2021}).
+
+        \subparagraph{Cropping.} During the prototyping phase of model training, we noticed that the produced inferenced output is very sparse when it comes to note density, i.e. the generated midi scores consisted of few notes separated by long lasting rests. We intuitively concluded that it was due to having very long scores together with short ones. Thus, we decided to crop the scores that are longer than 408 \crotchet{} (30\% of the database), successfully fixing the issue.
+
+        \paragraph{Parsing.}
+        The original architecture presented in \cite{hsiao_compound_2021} was based not on symbolic music representation files, but on collected audio files (1,748 pieces). Authors discuss the process of transcription into \texttt{MIDI} symbolic music representation format, as well as dealing with life-performance nature of data requiring further processing: note beat position estimation (\emph{synchronization}), time grid resolution reduction (\emph{quantization}) and distinguishing lead melody from its accompaniment (\emph{analysis}). The resulting \texttt{MIDI} files consist of one instrument track with 480 tick resolution. 
+
+        \begin{figure}[H]
+            \begin{verbatim}
+     tempo: 0:   IGN     
+            1:   no change
+            int: tempo
+     chord: 0:   IGN
+            1:   no change
+            str: chord types
+    bar-beat: 0:   IGN     
+            int: beat position (1...16)
+            int: bar (bar)
+      type: 0:   eos    
+            1:   metrical
+            2:   note
+    duration: 0:   IGN
+            int: length
+     pitch: 0:   IGN
+            int: pitch
+    velocity: 0:   IGN    
+            int: velocity
+            \end{verbatim}
+            \captionof{figure}{a pseudocode representation of event from \cite{hsiao_compound_2021} \texttt{corpus2events.py} script.}
+        \end{figure}
+
+        As our database already consists of symbolic music representations of music scores that are quantified by nature and does not have to deal with micro-timings typical for live performance, we did not have to execute any of the above mentioned procedures. It also allowed us to reduce midi resolution to 4 ticks per \crotchet{} (as the smallest possible note value encountered in Palestrina is likely a four time shorter \semiquaver).
+
+        In order to get \texttt{MIDI} files compatible with Hsiao's software, we 
+        applied \texttt{music21}'s \texttt{.flatten()} method to all the scores (collapsing into a single voice all the parts of a polyphonic piece). Having done this, we parsed those flattened scores to MIDI using \texttt{music21} internal parser resulting in one-track \texttt{MIDI}.
+
+        \paragraph{Vectorization.}
+        We reused the \cite{hsiao_compound_2021} architecture to create compound word vectors and separate data into train and validation sets. The code was reused \emph{as is}. Authors' pipeline requires: (1) parsing \texttt{MIDI} into ``corpus'' (a \texttt{music21}-like score representation in the form of a dictionary containing notes, chords, tempos, labels and metadata), (2) extracting ``events'' from each ``corpus'', (3) creating dictionary of tokenized ``events'' (``words'') and --- finally --- (4) parsing them into \texttt{numpy}'s arrays.
+        
+    \section{Experiments}
+
+        After 100 training epochs, we generated 61 \texttt{MIDI} files and assessed them by ear as representative enough for the researched music style (i.e. the resulting music was mostly diatonic and presenting similar rhythmic movement, see later discussion Fig. \ref{fig:heatmaps}).
+        
+        Fig. \ref{fig:palestrinaHisto} and \ref{fig:generatedHisto}) contain pitch histogram. The resulting data adheres to the Palestrina's choir ambitus (span of the lowest and highest pitches). For example, the present pitches on both of the histograms present a typical situation of the low register not containing chromatically altered pitches and a very low presence or complete absence of certain chromatically altered pitches in all the registers (i.e. D-flat)
+
+\end{multicols}
+
+    \begin{figure}[H]
+        \centering\resizebox{0.8\linewidth}{!}{\input{graphs/histogram_palestrina.pgf}}
+        \captionof{figure}{Histogram of pitches in Palestrina corpus (cropped and parsed to \texttt{MIDI}.}
+        \label{fig:palestrinaHisto}
+    \end{figure}
+    \begin{figure}[H]
+        \centering\resizebox{0.8\linewidth}{!}{\input{graphs/histogram_generated.pgf}}
+        \captionof{figure}{Histogram of pitches in generated \texttt{MIDI} files}
+        \label{fig:generatedHisto}
+    \end{figure}
+
+\begin{multicols}{2}
+        To investigate the quality of the model, we employed two approaches  proposed by \cite{yang_evaluation_2020} for this task: a pair-wise cross-validation relative metric and transition matrix comparison.
+        
+        \paragraph{Cross-validation.} Given our two sets of \texttt{MIDI} files (extracted from the original Palestrina corpus and transformer's generated output), we extracted the Euclidean distance of the pitch count in order to calculate the pairwise cross-validation. Here, the \emph{Palestrina-intra} and \emph{Model-intra} set distances are cross-validations that are computed within one set of data, whereas the \emph{Model-Palestrina} set distance is a cross-validation of each sample compared with all samples from the other set. According to Fig. \ref{fig:euclidean}, the pitch in the \emph{Model-intra} set has the highest density but a sharp decline in the euclidean distance, whereas the \emph{Palestrina-Intra} is lower in density and its euclidean distance is longer (not as long as \emph{Model-Palestrina} set). Therefore, inter has the lowest density but has the longest euclidean distance which indicates strong dissimilarity with the source data. 
+        
+        In the \emph{Model-Intra} set, there are also very interesting short spikes of density, easing at the edge of the euclidean distance. As the model generated data has by far fade-out like endings, this may indicate separability from the source data, when the model checks the next data point and the density comes back up as the resulting experiment data is now similar again with the source data.
+
+        \begin{figure}[H]
+            \noindent\resizebox{1\linewidth}{!}{\input{graphs/total_used_pitch.pgf}}
+            \captionof{figure}{Pitch Count for Palestrina-Intra (blue), Model-Intra (green), and inter-Model-Palestrina (yellow)}
+            \label{fig:euclidean}
+        \end{figure}
+
+        \paragraph{Transition Matrices.} \cite{yang_evaluation_2020} originally proposed comparison of feature transition matrices between datasets of different genres (Folk and Jazz). Feature matrices are heatmap histograms displaying how much a class within feature transits to another class. Authors employed pitch class (PCTM) and duration (``next length, NLTM) transition matrices.
+        
+        We reproduce this method with regard to our Palestrina and model-generated \texttt{MIDI} databases. We re-implemented pitch and duration feature extractors using \texttt{music21} and then normalized the result to the highest value on the heat map.
+
+        Based on the heat map's shape, we can notice prominent similarities, the main differences lying rather in transition distributions. Regarding PCTM, we can see that a repetition of note G is overly prominent in the model-generated \texttt{MIDI} scores. The original database's heat map points not only to different pitch class note transitions (G to D, C to G, D to A), but also displays much higher variety of other pitch transitions, their intensity increasing when traversing the heat map from right-bottom to the upper-left corner (model's heat map doesn't differentiate here much). It is worth noting that the distribution of the non-diatonic notes is similar, however the note B\flat{} is much less present in the model examples when compared to the scores of Palestrina.
+
+        The produced heat maps of NLTM (next-length transition matrix) shows similarity with the overall rhythmic contour, \minim{} \minim{} consequence being the most common for both datasets. Visible differences occur in semibreves (id: 1) transition (much more prominent in the originals) and occurrence of the slower and faster rhythmic motion (the ``ghost'' squares prominent for the upper right and lower left sectors for Palestrina and his model correspondingly).
+        
+    \section{Conclusion}
+    Compound Word Transformer model \cite{hsiao_compound_2021} is still a highly useful tool despite the shortcomings of having a small dataset. Despite being a transformer decoder architecture, the model was also relatively inexpensive to train without sabotaging the quality of the output. Pitch histograms, pairwise cross-validation relative metric and transition matrix comparison, supports the model as approaching the style of the source data (available Palestrina's music encoded in \texttt{MIDI}). The highlights of the resulting inference of the distribution of diatonic notes and the overall rhythmic contour is the feature most alike to the original corpus.
+
+\end{multicols}
+        \begin{figure}[t]
+            \noindent\includegraphics[width=1\columnwidth]{graphs/transition_heatmap.pdf}
+            \captionof{figure}{Comparison of PCTM (two left) and NLTM (two right) heat maps for Palestrina and model-generated \texttt{MIDI} based on \cite{yang_evaluation_2020}. The pitch classes are represented by the note names (only diatonic are listed) and the duration by the \texttt{lilypond}'s duration notation (4 being \crotchet, 3 being \crotchetDotted, 2 being \minim{} etc.).}
+            \label{fig:heatmaps}
+        \end{figure}
+\begin{multicols}{2}
+
+    \section{Future Work}
+    Due to the time constraints, we were not able to train the data on multiple models and compare the resulting systems with Yang's evaluation metrics. Nor were we able to compare multiple data within the same model. Furthermore, the corpus containing masses by Giovanni Pierluigi da Palestrina, being encoded in data-rich \texttt{**kern} format allowing for further musical contextualization, has been ``downgraded'' to less rich \texttt{MIDI} data format (with one track only due to preserving compatibility with \cite{hsiao_compound_2021}'s compound word model), losing track of individual voices (and thus the most idiomatic part of the repertoire). A properly satisfying usage of compound word architecture would require parsing features typical for Renaissance counterpoint (instead of piano pop live accompaniments that this architecture was optimized for).
+
+    Another issue is lack of any measurements proving effectively that attention layers were proven important for our result or that the Transformer kept track of any relevant musicological concept. They are methods to investigate layer activation when provided sufficient example data for a predefined musicological concept, as presented in \cite{ConceptBasedTechniques}, that can be used to query for any relevance between concept and network internals.
+    
+    Therefore, for future projects it is possible to conduct further experimentation that involves the above mentioned remarks and see how the field of music generation can benefit from it. For instance, at the moment Hsiao's decoder transformer model only preserves note's pitch, duration, information about the chord the note belongs to, velocity, and time onset. It would be interesting as further experiment to enhance this decoder to also store voice information and examine the resulting model.
+
+    Lastly, we would be interested in using more human-centered evaluation methods when assessing model's inferences. Musical Turing test, where audience assess performances of the original and machine generated snippets can count as such a method, that does not need to adhere strictly to music professionals' knowledge \cite{musicTuringTest}. Within more expert environment, the HER metric proposed by \cite{kalonaris_computational_2020} can be a more data-rich resource, where the vector space distances between original (generated) sample and its modified version adjusted by the human evaluator (to make it sound more ``human'') are calculated.
+
+    \section{Acknowledgments}
+    The training data we used are part of the open-source projects (\texttt{music21}, \texttt{Humdrum} \cite{humdrum}, \texttt{Elvis}, \texttt{SIMSSA} \cite{simssa} etc) and are not extracted in any way from potentially copyrighted material.
+    
+    \printbibliography
+    
+\end{multicols}{2}
+\end{document}
